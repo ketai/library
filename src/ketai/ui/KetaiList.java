@@ -171,7 +171,11 @@ public class KetaiList extends ListView {
 		setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> p, View view, int position, long id) {
 
-				selection = adapter.getItem(position).toString();
+				//In case the title item (if included/defined) is tapped.
+				if(id<0)
+                                  return;
+				
+				selection = adapter.getItem(id).toString();
 
 				layout.removeAllViewsInLayout();
 				try {

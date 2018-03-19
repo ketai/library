@@ -4,7 +4,7 @@
 package ketai.ui;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.List;
 
 import processing.core.PApplet;
 import android.graphics.Color;
@@ -28,28 +28,28 @@ import android.widget.TextView;
 public class KetaiList extends ListView {
 
 	/** The parent. */
-	private PApplet parent;
+	final protected PApplet parent;
 
 	/** The adapter. */
-	private ArrayAdapter<String> adapter;
+	final protected ArrayAdapter<String> adapter;
 
 	/** The name. */
-	String name = "KetaiList";
+	static final protected String name = "KetaiList";
 
 	/** The selection. */
-	String selection = "";
+	protected String selection = "";
 
 	/** The self. */
-	ListView self;
+	protected ListView self;
 
 	/** The layout. */
-	RelativeLayout layout;
+	protected RelativeLayout layout;
 
 	/** The parent callback. */
-	private Method parentCallback;
+	protected Method parentCallback;
 
 	/** The title. */
-	String title = "";
+	protected String title = "";
 
 	/**
 	 * Instantiates a new ketai list.
@@ -59,12 +59,11 @@ public class KetaiList extends ListView {
 	 * @param data
 	 *            the data
 	 */
-	public KetaiList(PApplet _parent, ArrayList<String> data) {
+	public KetaiList(PApplet _parent, List<String> data) {
 		super(_parent.getActivity().getApplicationContext());
 		parent = _parent;
 		adapter = new ArrayAdapter<String>(parent.getActivity(), android.R.layout.simple_list_item_1, data);
 		init();
-
 	}
 
 	/**
@@ -112,7 +111,7 @@ public class KetaiList extends ListView {
 	 * @param data
 	 *            the data
 	 */
-	public KetaiList(PApplet _parent, String _title, ArrayList<String> data) {
+	public KetaiList(PApplet _parent, String _title, List<String> data) {
 		super(_parent.getActivity().getApplicationContext());
 		parent = _parent;
 		title = _title;
@@ -146,14 +145,14 @@ public class KetaiList extends ListView {
 	/**
 	 * Inits the.
 	 */
-	private void init() {
+	protected void init() {
 		setBackgroundColor(Color.LTGRAY);
 		setAlpha(1);
 		self = this;
 
 		layout = new RelativeLayout(parent.getActivity());
 
-		if (title != "") {
+		if (title != null && !title.isEmpty()) {
 			TextView tv = new TextView(parent.getActivity());
 			tv.setText(title);
 			setHeaderDividersEnabled(true);
@@ -195,10 +194,9 @@ public class KetaiList extends ListView {
 		parent.getActivity().runOnUiThread(new Runnable() {
 			@SuppressWarnings("deprecation")
 			public void run() {
-				parent.getActivity().addContentView(self, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-						ViewGroup.LayoutParams.FILL_PARENT));
+				parent.getActivity().addContentView(self, new ViewGroup.LayoutParams(
+					ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
 			}
 		});
-
 	}
 }
